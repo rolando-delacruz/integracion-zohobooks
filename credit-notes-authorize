@@ -1,0 +1,56 @@
+customer = zoho.books.getRecordsByID("Contacts",organization.get("organization_id"),creditnote.get("customer_id"));
+resultMap = Map();
+resultMap.put("customer",customer);
+resultMap.put("creditnote",creditnote);
+headers = Map();
+headers.put("ApiKeyEfactura","<API_KEY>");
+headers.put("Accept-Language","es-PA");
+headers.put("Content-Type","application/x-www-form-urlencoded");
+autorizacion = invokeurl
+[
+	url :"https://<EFACTURAPTY_DOMAIN>/Zoho/CreditMemo"
+	type :POST
+	parameters:resultMap
+	headers:headers
+];
+autorizacionMap = autorizacion.toMap();
+//se verifica si el retorno de la invoación contiene código exitoso de autorización
+if(autorizacion.contains('"dCodRes":"0260"'))
+{
+	//si es exitoso se actualiza la factura con el cufe, codigo autorización y fecha, son custom fields
+	//preparación de la estructura del update
+	customFieldList = List();
+	customFieldMap1 = Map();
+	customFieldMap1.put('api_name','cf_cufe');
+	customFieldMap1.put('value',autorizacionMap.get('cufe'));
+	customFieldList.add(customFieldMap1);
+	customFieldMap2 = Map();
+	customFieldMap2.put('api_name','cf_protocolo_de_autorizaci_n');
+	customFieldMap2.put('value',autorizacionMap.get('rRetEnviFe').get('xProtFe').get('rProtFe').get('gInfProt').get('dProtAut'));
+	customFieldList.add(customFieldMap2);
+	customFieldMap3 = Map();
+	customFieldMap3.put('api_name','cf_fecha_de_autorizaci_n');
+	customFieldMap3.put('value',autorizacionMap.get('rRetEnviFe').get('xProtFe').get('rProtFe').get('gInfProt').get('dFecProc').left(10));
+	customFieldList.add(customFieldMap3);
+	//customFieldMap4 = Map();
+	//customFieldMap4.put('api_name','cf_qr_link');
+	//customFieldMap4.put('value',autorizacionMap.get('qrContent'));
+	//customFieldList.add(customFieldMap4);
+	updateCreditNoteMap = Map();
+	updateCreditNoteMap.put('custom_fields',customFieldList);
+	//invocación para la actualización
+	updateCreditNote = zoho.books.updateRecord('Credit Notes',organization.get('organization_id'),creditnote.get('credit_note_id'),updateCreditNoteMap);
+	markAsSent = zoho.books.markStatus('Credite Notes',organization.get('organization_id'),creditnote.get('invoice_id'),'sent');
+	info markAsSent;
+	//se inicializa el mensaje de retorno
+	resultMap.put("message","Nota de credito autorizada");
+	resultMap.put("code",updateCreditNote);
+}
+else
+{
+	//la factura no se autorizó
+	resultMap.put("message","Error al autorizar la factura: " + autorizacionMap.get('rRetEnviFe').get('xProtFe').get('rProtFe').get('gInfProt').get('gResProc'));
+	resultMap.put("code",1);
+}
+resultMap.put("autorizacion",autorizacion);
+return resultMap;
