@@ -26,11 +26,11 @@ if(autorizacion.contains('"dCodRes":"0260"'))
 	customFieldList.add(customFieldMap1);
 	customFieldMap2 = Map();
 	customFieldMap2.put('api_name','cf_protocolo_de_autorizaci_n');
-	customFieldMap2.put('value',autorizacionMap.get('rRetEnviFe').get('xProtFe').get('rProtFe').get('gInfProt').get('dProtAut'));
+	customFieldMap2.put('value',autorizacionMap.get('protocoloAutorizacion'));
 	customFieldList.add(customFieldMap2);
 	customFieldMap3 = Map();
 	customFieldMap3.put('api_name','cf_fecha_de_autorizaci_n');
-	customFieldMap3.put('value',autorizacionMap.get('rRetEnviFe').get('xProtFe').get('rProtFe').get('gInfProt').get('dFecProc').left(10));
+	customFieldMap3.put('value',autorizacionMap.get('fechaAutorizacion').left(10));
 	customFieldList.add(customFieldMap3);
 	//customFieldMap4 = Map();
 	//customFieldMap4.put('api_name','cf_qr_link');
