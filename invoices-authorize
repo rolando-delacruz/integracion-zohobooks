@@ -1,14 +1,20 @@
+//********** API KEY ***************
+// INGRESE AQUÍ EL API KEY DE SU CUENTA DE efacturapty
+
+apiKey = "INGRESE AQUI SU API KEY";
+
+//**********************************
 customer = zoho.books.getRecordsByID("Contacts",organization.get("organization_id"),invoice.get("customer_id"));
 resultMap = Map();
 resultMap.put("customer",customer);
 resultMap.put("invoice",invoice);
 headers = Map();
-headers.put("ApiKeyEfactura","<API_KEY>");
+headers.put("ApiKeyEfactura",apiKey);
 headers.put("Accept-Language","es-PA");
 headers.put("Content-Type","application/x-www-form-urlencoded");
 autorizacion = invokeurl
 [
-	url :"https://<EFACTURAPTY_DOMAIN>/Zoho/CreditMemo"
+	url :"https://hub.efacturapty.com/Zoho/CreditMemo"
 	type :POST
 	parameters:resultMap
 	headers:headers
@@ -32,10 +38,6 @@ if(autorizacion.contains('"dCodRes":"0260"'))
 	customFieldMap3.put('api_name','cf_fecha_de_autorizaci_n');
 	customFieldMap3.put('value',autorizacionMap.get('fechaAutorizacion').left(10));
 	customFieldList.add(customFieldMap3);
-	//customFieldMap4 = Map();
-	//customFieldMap4.put('api_name','cf_qr_link');
-	//customFieldMap4.put('value',autorizacionMap.get('qrContent'));
-	//customFieldList.add(customFieldMap4);
 	updateInvoiceMap = Map();
 	updateInvoiceMap.put('custom_fields',customFieldList);
 	
@@ -46,6 +48,7 @@ if(autorizacion.contains('"dCodRes":"0260"'))
 	//se inicializa el mensaje de retorno
 	resultMap.put("message","Factura autorizada");
 	resultMap.put("code",updateInvoice);
+	resultMap.put("autorizacion",autorizacion);
 }
 else
 {
@@ -53,5 +56,5 @@ else
 	resultMap.put("message","Error al autorizar la factura: " + autorizacionMap.get('rRetEnviFe').get('xProtFe').get('rProtFe').get('gInfProt').get('gResProc'));
 	resultMap.put("code",1);
 }
-resultMap.put("autorizacion",autorizacion);
+
 return resultMap;
