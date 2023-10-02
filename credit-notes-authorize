@@ -1,14 +1,20 @@
+//********** API KEY ***************
+// INGRESE AQUÍ EL API KEY DE SU CUENTA DE efacturapty
+
+apiKey = "INGRESE AQUI SU API KEY";
+
+//**********************************
 customer = zoho.books.getRecordsByID("Contacts",organization.get("organization_id"),creditnote.get("customer_id"));
 resultMap = Map();
 resultMap.put("customer",customer);
 resultMap.put("creditnote",creditnote);
 headers = Map();
-headers.put("ApiKeyEfactura","<API_KEY>");
+headers.put("ApiKeyEfactura",apiKey);
 headers.put("Accept-Language","es-PA");
 headers.put("Content-Type","application/x-www-form-urlencoded");
 autorizacion = invokeurl
 [
-	url :"https://<EFACTURAPTY_DOMAIN>/Zoho/CreditMemo"
+	url :"https://hub.efacturapty.com/Zoho/CreditMemo"
 	type :POST
 	parameters:resultMap
 	headers:headers
