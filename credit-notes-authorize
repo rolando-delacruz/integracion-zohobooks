@@ -15,7 +15,7 @@ autorizacion = invokeurl
 ];
 autorizacionMap = autorizacion.toMap();
 //se verifica si el retorno de la invoación contiene código exitoso de autorización
-if(autorizacion.contains('"dCodRes":"0260"'))
+if(autorizacion.contains('"autorizada":true'))
 {
 	//si es exitoso se actualiza la factura con el cufe, codigo autorización y fecha, son custom fields
 	//preparación de la estructura del update
