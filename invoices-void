@@ -1,3 +1,9 @@
+//********** API KEY ***************
+// INGRESE AQUÍ EL API KEY DE SU CUENTA DE efacturapty
+
+apiKey = "INGRESE AQUI SU API KEY";
+
+//**********************************
 invoiceNumber = invoice.get("invoice_number");
 resultMap = Map();
 customFieldList = invoice.get("custom_fields").toJSONList();
@@ -13,13 +19,13 @@ for each  customField in customFieldList
 resultMap.put("cufe",cufeCustomField.get("value"));
 resultMap.put("reason","Anulación desde ZohoBooks");
 headers = Map();
-headers.put("ApiKeyEfactura","CF24F0CB03E2105F3A421CE315DDBDD2630F17F51A97D69E81F282A70644800A");
+headers.put("ApiKeyEfactura",apiKey);
 headers.put("Accept-Language","es-PA");
 headers.put("Content-Type","application/x-www-form-urlencoded");
 
 autorizacion = invokeurl
 [
-	url :"https://4216-177-222-62-224.ngrok.io/Zoho/VoidInvoice"
+	url :"https://hub.efacturapty.com/Zoho/VoidInvoice"
 	type :POST
 	parameters:resultMap
 	headers:headers
