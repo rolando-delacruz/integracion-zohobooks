@@ -38,16 +38,12 @@ if(autorizacion.contains('"autorizada":true'))
 	customFieldMap3.put('api_name','cf_fecha_de_autorizaci_n');
 	customFieldMap3.put('value',autorizacionMap.get('fechaAutorizacion').left(10));
 	customFieldList.add(customFieldMap3);
-	//customFieldMap4 = Map();
-	//customFieldMap4.put('api_name','cf_qr_link');
-	//customFieldMap4.put('value',autorizacionMap.get('qrContent'));
-	//customFieldList.add(customFieldMap4);
 	updateCreditNoteMap = Map();
 	updateCreditNoteMap.put('custom_fields',customFieldList);
+	
 	//invocación para la actualización
-	updateCreditNote = zoho.books.updateRecord('Credit Notes',organization.get('organization_id'),creditnote.get('credit_note_id'),updateCreditNoteMap);
-	markAsSent = zoho.books.markStatus('Credite Notes',organization.get('organization_id'),creditnote.get('invoice_id'),'sent');
-	info markAsSent;
+	updateCreditNote = zoho.books.updateRecord('CreditNotes',organization.get('organization_id'),creditnote.get('creditnote_id'),updateCreditNoteMap);
+
 	//se inicializa el mensaje de retorno
 	resultMap.put("message","Nota de credito autorizada");
 	resultMap.put("code",updateCreditNote);
