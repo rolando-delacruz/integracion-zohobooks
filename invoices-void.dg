@@ -4,7 +4,6 @@
 apiKey = "INGRESE AQUI SU API KEY";
 
 //**********************************
-invoiceNumber = invoice.get("invoice_number");
 resultMap = Map();
 customFieldList = invoice.get("custom_fields").toJSONList();
 cufeCustomField = null;
@@ -31,14 +30,7 @@ autorizacion = invokeurl
 	headers:headers
 ];
 resultMap.put("response",autorizacion);
-// if(autorizacion == "")
-// {
 resultMap.put("message","Factura anulada con exito");
 resultMap.put("code",0);
-// }
-// else
-// {
-// 	resultMap.put("message","Error al anular la factura");
-// 	resultMap.put("code",1);
-// }
+
 return resultMap;
