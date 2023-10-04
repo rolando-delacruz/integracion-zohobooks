@@ -20,12 +20,11 @@ autorizacion = invokeurl
 	headers:headers
 ];
 autorizacionMap = autorizacion.toMap();
-//se verifica si el retorno de la invoación contiene código exitoso de autorización
+// Se verifica si el retorno de la invocación contiene código exitoso de autorización
 if(autorizacion.contains('"autorizada":true'))
 {
-	//si es exitoso se actualiza la factura con el cufe, codigo autorización y fecha, son custom fields
-	//preparación de la estructura del update
-	customFieldList = List();
+	// Si es exitoso se actualiza la factura con el cufe, código de autorización y fecha de autorización, son custom fields y empieza la preparación de la estructura del update 
+	customFieldList = List();	
 	customFieldMap1 = Map();
 	customFieldMap1.put('api_name','cf_cufe');
 	customFieldMap1.put('value',autorizacionMap.get('cufe'));
@@ -40,18 +39,18 @@ if(autorizacion.contains('"autorizada":true'))
 	customFieldList.add(customFieldMap3);
 	updateCreditNoteMap = Map();
 	updateCreditNoteMap.put('custom_fields',customFieldList);
-	
-	//invocación para la actualización
+
+	// Invocación para la actualización
 	updateCreditNote = zoho.books.updateRecord('CreditNotes',organization.get('organization_id'),creditnote.get('creditnote_id'),updateCreditNoteMap);
 
-	//se inicializa el mensaje de retorno
-	resultMap.put("message","Nota de credito autorizada");
+	// Se inicializa el mensaje de retorno
+	resultMap.put("message","Nota de crédito autorizada");
 	resultMap.put("code",updateCreditNote);
 }
 else
 {
-	//la factura no se autorizó
-	resultMap.put("message","Error al autorizar la factura: " + autorizacionMap.get('rRetEnviFe').get('xProtFe').get('rProtFe').get('gInfProt').get('gResProc'));
+	// La factura no se autorizó
+	resultMap.put("message","Error al autorizar la nota de crédito: " + autorizacionMap.get('rRetEnviFe').get('xProtFe').get('rProtFe').get('gInfProt').get('gResProc'));
 	resultMap.put("code",1);
 }
 resultMap.put("autorizacion",autorizacion);
