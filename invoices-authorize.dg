@@ -1,6 +1,6 @@
 //********** API KEY ***************
 // INGRESE AQUÍ EL API KEY DE SU CUENTA DE efacturapty
-apiKey = "78715B7F0B8D0218F85D8E3C59E0D04D4BF828CE1962F0695C8A26A82E79BBCE";
+apiKey = "78715B7F0B8D0218F85D8E3C59E0D04D4BF828CE12F0695C8A26A82E79BBCE";
 //**********************************
 customer = zoho.books.getRecordsByID("Contacts",organization.get("organization_id"),invoice.get("customer_id"));
 sendMap = {"customer":customer,"invoice":invoice};
