@@ -15,22 +15,14 @@ for each  customField in customFieldList
 		break;
 	}
 }
-resultMap.put("cufe",cufeCustomField.get("value"));
-resultMap.put("reason","Anulación desde ZohoBooks");
-headers = Map();
-headers.put("ApiKeyEfactura",apiKey);
-headers.put("Accept-Language","es-PA");
-headers.put("Content-Type","application/x-www-form-urlencoded");
-
+sendMap = {"cufe":cufeCustomField.get("value"),"reason":"Anulación desde ZohoBooks"};
+headers = {"ApiKeyEfactura":apiKey,"Content-Type":"application/x-www-form-urlencoded"};
 autorizacion = invokeurl
 [
 	url :"https://hub.efacturapty.com/Zoho/VoidInvoice"
 	type :POST
-	parameters:resultMap
+	parameters:sendMap
 	headers:headers
 ];
-resultMap.put("response",autorizacion);
-resultMap.put("message","Nota de crédito anulada con éxito.");
-resultMap.put("code",0);
-
+resultMap = {"code":0,"message":"Nota de crédito anulada con éxito"};
 return resultMap;
