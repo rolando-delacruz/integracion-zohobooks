@@ -25,6 +25,6 @@ autorizacion = invokeurl
 	parameters:sendMap
 	headers:headers
 ];
-resultMap = {"code":0,"message":"Nota de crédito anulada con éxito"};
+resultMap = {"code":0,"message":"Factura electrónica anulada con éxito"};
 
 return resultMap;
