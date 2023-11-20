@@ -17,7 +17,6 @@ for each  customField in customFieldList
 }
 sendMap = {"cufe":cufeCustomField.get("value"),"reason":"Anulación desde ZohoBooks"};
 headers = {"ApiKeyEfactura":apiKey,"Content-Type":"application/x-www-form-urlencoded"};
-
 autorizacion = invokeurl
 [
 	url :"https://hub.efacturapty.com/Zoho/VoidInvoice"
@@ -25,6 +24,17 @@ autorizacion = invokeurl
 	parameters:sendMap
 	headers:headers
 ];
-resultMap = {"code":0,"message":"Factura electrónica anulada con éxito"};
-
+mensajeError = "";
+for each  error in autorizacion
+{
+	if(error.get('codigo').equals("0600"))
+	{
+		markAsSent = zoho.books.markStatus('Invoices',organization.get('organization_id'),invoice.get('invoice_id'),'void');
+		resultMap = {"code":0,"message":"Factura electrónica anulada con éxito"};
+		return resultMap;
+	}
+	mensajeError = mensajeError + " [ " + error.get('codigo') + " - " + error.get('mensaje') + " ]";
+}
+resultMap = {"code":0,"message":mensajeError};
 return resultMap;
+
