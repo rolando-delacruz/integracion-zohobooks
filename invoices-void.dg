@@ -29,7 +29,7 @@ for each  error in autorizacion
 {
 	if(error.get('codigo').equals("0600"))
 	{
-		markAsSent = zoho.books.markStatus('Invoices',organization.get('organization_id'),invoice.get('invoice_id'),'void');
+		markAsVoid = zoho.books.markStatus('Invoices',organization.get('organization_id'),invoice.get('invoice_id'),'void');
 		resultMap = {"code":0,"message":"Factura electrónica anulada con éxito"};
 		return resultMap;
 	}
