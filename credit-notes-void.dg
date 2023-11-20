@@ -24,5 +24,16 @@ autorizacion = invokeurl
 	parameters:sendMap
 	headers:headers
 ];
-resultMap = {"code":0,"message":"Nota de crédito anulada con éxito"};
+mensajeError = "";
+for each  error in autorizacion
+{
+	if(error.get('codigo').equals("0600"))
+	{
+		markAsSent = zoho.books.markStatus('CreditNotes',organization.get('organization_id'),creditnote.get('creditnote_id'),'void');
+		resultMap = {"code":0,"message":"Nota de crédito anulada con éxito"};
+		return resultMap;
+	}
+	mensajeError = mensajeError + " [ " + error.get('codigo') + " - " + error.get('mensaje') + " ]";
+}
+resultMap = {"code":0,"message":mensajeError};
 return resultMap;
