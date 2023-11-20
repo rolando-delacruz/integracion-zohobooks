@@ -29,7 +29,7 @@ for each  error in autorizacion
 {
 	if(error.get('codigo').equals("0600"))
 	{
-		markAsSent = zoho.books.markStatus('CreditNotes',organization.get('organization_id'),creditnote.get('creditnote_id'),'void');
+		markAsVoid = zoho.books.markStatus('CreditNotes',organization.get('organization_id'),creditnote.get('creditnote_id'),'void');
 		resultMap = {"code":0,"message":"Nota de crédito anulada con éxito"};
 		return resultMap;
 	}
